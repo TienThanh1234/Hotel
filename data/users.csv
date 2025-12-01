@@ -1,0 +1,2 @@
+﻿username,password,full_name,dob,gender,email,phone,total_spent
+IshoutoKara,scrypt:32768:8:1$5nkclWb6VOZZg5sH$a77f7e0d9a68bc2b65c73a59c2863c9efd9a4ace83a327508f284c678d877a08ab1c196f5b0dccc6db06737bba3fc453d540c6309d95677c6a675240bb6116d8,Do Khac Thanh Cong,2000-09-23,Khác,ishoutokara@gmail.com,348400827,3400000.0
