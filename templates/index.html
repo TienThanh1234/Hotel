@@ -25,6 +25,18 @@
             position: relative;
         }
 
+        /* 🔹 Hiệu ứng nền động */
+        lottie-player {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.95;
+        }
+
+        /* 🔹 Thanh menu */
         nav.navbar {
             background: rgba(0, 0, 0, 0.4);
             backdrop-filter: blur(10px);
@@ -39,34 +51,78 @@
         .navbar-brand, .nav-link {
             color: white !important;
             font-weight: 500;
+            transition: color 0.3s;
         }
 
             .nav-link:hover {
                 color: #ffcc70 !important;
             }
 
+        /* 🔹 Hero */
         .hero {
             text-align: center;
             padding-top: 140px;
             animation: fadeDown 1.2s ease;
         }
 
-            .hero h1 {
-                font-weight: 600;
-                font-size: 3rem;
-                background: linear-gradient(270deg, #ff8a00, #e52e71, #ff8a00);
-                background-size: 600% 600%;
-                -webkit-background-clip: text;
-                -webkit-text-fill-color: transparent;
-                animation: glow 4s ease infinite, gradientShift 6s ease infinite;
-                text-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+        @keyframes fadeDown {
+            from {
+                opacity: 0;
+                transform: translateY(-40px);
             }
 
-            .hero p {
-                font-size: 1.2rem;
-                color: #f5f5f5;
-                margin-bottom: 40px;
+            to {
+                opacity: 1;
+                transform: translateY(0);
             }
+        }
+
+        .hero h1 {
+            font-weight: 600;
+            font-size: 3rem;
+            /* Hiệu ứng gradient trong chữ */
+            background: linear-gradient(270deg, #ff8a00, #e52e71, #ff8a00);
+            background-size: 600% 600%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            /* Glow animation */
+            animation: glow 4s ease infinite, gradientShift 6s ease infinite;
+            text-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        @keyframes glow {
+            0% {
+                text-shadow: 0 0 10px #fff;
+            }
+
+            50% {
+                text-shadow: 0 0 25px #ffcc70;
+            }
+
+            100% {
+                text-shadow: 0 0 10px #fff;
+            }
+        }
+
+        @keyframes gradientShift {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: #f5f5f5;
+            margin-bottom: 40px;
+        }
 
         .search-box {
             background: rgba(0, 0, 0, 0.5);
@@ -77,6 +133,18 @@
             max-width: 90%;
             margin: 0 auto;
             animation: zoomIn 1.5s ease;
+        }
+
+        @keyframes zoomIn {
+            from {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
         }
 
         .btn-custom {
@@ -115,69 +183,16 @@
             position: relative;
             z-index: 1;
         }
-
-        @keyframes fadeDown {
-            from {
-                opacity: 0;
-                transform: translateY(-40px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes glow {
-            0% {
-                text-shadow: 0 0 10px #fff;
-            }
-
-            50% {
-                text-shadow: 0 0 25px #ffcc70;
-            }
-
-            100% {
-                text-shadow: 0 0 10px #fff;
-            }
-        }
-
-        @keyframes gradientShift {
-            0% {
-                background-position: 0% 50%;
-            }
-
-            50% {
-                background-position: 100% 50%;
-            }
-
-            100% {
-                background-position: 0% 50%;
-            }
-        }
-
-        @keyframes zoomIn {
-            from {
-                transform: scale(0.8);
-                opacity: 0;
-            }
-
-            to {
-                transform: scale(1);
-                opacity: 1;
-            }
-        }
     </style>
 </head>
 
 <body>
-    <!-- Video background -->
+    <!-- 🌈 Video background -->
     <video autoplay muted loop playsinline id="bg-video">
-        <source src="https://dl.dropboxusercontent.com/scl/fi/zwyuq6j7wqeynwrpfao45/Hailuo_Video_create-me-a-2d-video-of-a-man-_439927170696192002.mp4?rlkey=jknr5997ddu619skmo8mez7mx&st=5qr7zowi" type="video/mp4">
+        <source src="{{ url_for('static', filename='videos/bg.mp4') }}" type="video/mp4">
     </video>
 
-
-    <!-- Navbar -->
+    <!-- 🔝 Navbar -->
     <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
             <a class="navbar-brand fw-bold" href="/">
@@ -192,47 +207,26 @@
                     <li class="nav-item"><a class="nav-link" href="/">Trang chủ</a></li>
                     <li class="nav-item"><a class="nav-link" href="/about">Giới thiệu</a></li>
                     <li class="nav-item"><a class="nav-link" href="#search">Tìm kiếm</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/ai_chat">🤖 AI Chat</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/history">📘 Lịch sử đặt phòng</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/admin/login">🔑 Admin</a></li>
                     <li class="nav-item"><a class="nav-link" href="tel:+84987654321">📞 0987 654 321</a></li>
-
-                    {% if not session.get('user') %}
-                    <li class="nav-item">
-                        <a class="nav-link btn btn-outline-light ms-2" href="/login">Đăng nhập</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link btn btn-light text-dark ms-2" href="/register">Đăng ký</a>
-                    </li>
-                    {% else %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('profile') }}">
-                            👤 Xin chào, {{ session['user']['username'] }}
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link btn btn-outline-danger ms-2" href="/logout">Đăng xuất</a>
-                    </li>
-                    {% endif %}
                 </ul>
             </div>
         </div>
     </nav>
 
-    <!-- Hero + Search -->
+    <!-- 🌟 Hero -->
     <div class="hero">
         <h1>Khám phá khách sạn mơ ước của bạn ✨</h1>
         <p>Tìm nơi lưu trú lý tưởng — nhanh chóng, dễ dàng và thông minh hơn.</p>
 
+        <!-- 🔍 Form tìm kiếm -->
         <form action="/recommend" method="POST" class="search-box" id="search">
             <div class="mb-3">
                 <label class="form-label">📍 Thành phố</label>
                 <select class="form-select" name="location" required>
                     <option value="">-- Chọn thành phố --</option>
-                    <option value="Da Nang">Da Nang</option>
-                    <option value="Hanoi">Hanoi</option>
-                    <option value="Ho Chi Minh">Ho Chi Minh</option>
-                    <option value="Nha Trang">Nha Trang</option>
+                    {% for city in cities %}
+                    <option value="{{ city }}">{{ city }}</option>
+                    {% endfor %}
                 </select>
             </div>
 
@@ -254,383 +248,13 @@
             </div>
 
             <button type="submit" class="btn btn-custom w-100 py-2">🔍 Tìm khách sạn</button>
-
-            <div class="mt-4">
-                <a href="/history" class="btn btn-outline-light px-4 py-2" style="border-radius:30px;">
-                    📘 Xem lịch sử đặt phòng của bạn
-                </a>
-            </div>
         </form>
     </div>
-
-    <!-- Tra cứu mã đặt phòng -->
-    <div class="lookup my-5 container">
-        <h2>🔎 Tra cứu mã đặt phòng</h2>
-        <p>Nhập mã đặt phòng của bạn để kiểm tra thông tin</p>
-
-        <form action="/check_booking" method="POST" class="d-flex gap-2 flex-wrap">
-            <input type="text" name="code" class="form-control" placeholder="Nhập mã đặt phòng" required>
-            <button type="submit" class="btn btn-primary">Tra cứu</button>
-        </form>
-
-        {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-        <div class="mt-3">
-            {% for category, message in messages %}
-            <div class="alert alert-{{ 'success' if category=='success' else 'danger' }} d-inline-block">
-                {{ message | safe }}
-            </div>
-            {% endfor %}
-        </div>
-        {% endif %}
-        {% endwith %}
-    </div>
-
-    <!-- ===================== BẮT ĐẦU: MỞ RỘNG HERO - INTRO + DESTINATIONS ===================== -->
-    <!-- Giới thiệu ngắn -->
-    <section class="container text-center mt-5 mb-4" id="site-intro" style="max-width:1000px; z-index:1; position:relative;">
-        <div class="p-4 rounded-4" style="background:rgba(0,0,0,0.45); backdrop-filter: blur(6px);">
-            <h2 class="fw-bold" style="color: #ffd27a;">Smart Hotel Finder</h2>
-            <p class="mb-1" style="color:#f3f3f3; font-size:1.05rem;">
-                Nền tảng tìm & đặt khách sạn thông minh — so sánh giá, lọc tiện nghi và đọc đánh giá thật.
-            </p>
-            <p class="text-muted small mb-0">Slogan: <em>Stay Smart, Stay Inspired.</em></p>
-        </div>
-    </section>
-
-    <!-- Thanh tìm kiếm địa danh -->
-    <section class="container mb-4" style="z-index:1; position:relative;">
-        <div class="row g-3 align-items-center">
-            <div class="col-md-6">
-                <div class="input-group">
-                    <input id="quickSearchInput" class="form-control" placeholder="Tìm thành phố hoặc địa danh (VD: Đà Nẵng)" aria-label="Tìm địa danh">
-                </div>
-            </div>
-            <div class="col-md-6 text-md-end">
-                <a href="#destinations" class="btn btn-outline-light">Xem điểm đến nổi bật</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Điểm đến nổi bật -->
-    <section id="destinations" class="container mb-5" style="z-index:1; position:relative;">
-        <h3 class="mb-3" style="color:#fff;">🌍 Điểm đến nổi bật</h3>
-        <div class="row g-3">
-            <!-- Card 1: Da Nang -->
-            <div class="col-6 col-md-3">
-                <a href="/destinations/Da%20Nang" class="text-decoration-none">
-                    <div class="card border-0 shadow-sm">
-                        <img src="/static/images/destinations/cities/danang.png" class="card-img-top" alt="Da Nang">
-                        <div class="card-body text-center">
-                            <strong class="text-dark">Đà Nẵng</strong>
-                            <p class="small text-muted mb-0">Khách sạn ven biển & view đẹp</p>
-                        </div>
-                    </div>
-                </a>
-            </div>
-
-            <!-- Card 2: Ho Chi Minh -->
-            <div class="col-6 col-md-3">
-                <a href="/destinations/Ho%20Chi%20Minh" class="text-decoration-none">
-                    <div class="card border-0 shadow-sm">
-                        <img src="/static/images/destinations/cities/hcm.png" class="card-img-top" alt="Ho Chi Minh">
-                        <div class="card-body text-center">
-                            <strong class="text-dark">Hồ Chí Minh</strong>
-                            <p class="small text-muted mb-0">Khách sạn trung tâm, tiện giao thông</p>
-                        </div>
-                    </div>
-                </a>
-            </div>
-
-            <!-- Card 3: Ha Noi -->
-            <div class="col-6 col-md-3">
-                <a href="/destinations/Ha%20Noi" class="text-decoration-none">
-                    <div class="card border-0 shadow-sm">
-                        <img src="/static/images/destinations/cities/hanoi.png" class="card-img-top" alt="Ha Noi">
-                        <div class="card-body text-center">
-                            <strong class="text-dark">Hà Nội</strong>
-                            <p class="small text-muted mb-0">Khách sạn cổ điển & ấm cúng</p>
-                        </div>
-                    </div>
-                </a>
-            </div>
-
-            <!-- Card 4: Nha Trang -->
-            <div class="col-6 col-md-3">
-                <a href="/destinations/Nha%20Trang" class="text-decoration-none">
-                    <div class="card border-0 shadow-sm">
-                        <img src="/static/images/destinations/cities/nhatrang.png" class="card-img-top" alt="Nha Trang">
-                        <div class="card-body text-center">
-                            <strong class="text-dark">Nha Trang</strong>
-                            <p class="small text-muted mb-0">Resort & bãi tắm đẹp</p>
-                        </div>
-                    </div>
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Thêm CSS nhỏ để khớp giao diện (không đè lên style gốc) -->
-    <style>
-        #destinations .card {
-            cursor: pointer;
-            overflow: hidden;
-            border-radius: 12px;
-        }
-
-            #destinations .card img {
-                height: 140px;
-                object-fit: cover;
-            }
-
-        .btn-custom {
-            background: linear-gradient(45deg,#ff8a00,#e52e71);
-            color: #fff;
-            border: none;
-            border-radius: 30px;
-        }
-    </style>
-
-    <!-- JS: xử lý tìm kiếm nhanh -->
-    <script>
-        document.getElementById('quickSearchInput')?.addEventListener('keydown', function (e) {
-        if (e.key === 'Enter') {
-        e.preventDefault();
-        const q = encodeURIComponent(this.value.trim());
-        if (q) window.location.href = '/destinations/' + q;
-        }
-        });
-    </script>
-    <!-- ===================== KẾT THÚC: MỞ RỘNG HERO - INTRO + DESTINATIONS ===================== -->
-    <!-- ===================== ĐÁNH GIÁ KHÁCH HÀNG - CAROUSEL ===================== -->
-    <section class="container mb-5" id="reviews-carousel-section" style="z-index:1; position:relative;">
-        <h3 class="mb-4 text-center" style="color:#fff;">📝 Đánh giá từ những người đã trải nghiệm</h3>
-        <p class="text-center text-muted mb-4">Khách hàng chia sẻ về những kỷ niệm tuyệt vời trên chuyến du lịch với chúng tôi.</p>
-
-        <div id="reviewsCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000" data-bs-pause="hover">
-            <div class="carousel-inner">
-                <!-- Review 1 -->
-                <div class="carousel-item active">
-                    <div class="p-4 rounded-4 mx-auto" style="max-width:700px; background: rgba(255,255,255,0.1); backdrop-filter: blur(6px);">
-                        <p style="color:#fff; font-style:italic;">
-                            "Cảm ơn team Smart Hotel Finder đã mang đến cho mình một trải nghiệm quá tuyệt vời.
-                            Chúng mình đi đúng hôm thời tiết đẹp, cảnh vịnh Hạ Long thật sự ngoạn mục, ánh nắng chiếu rọi lung linh.
-                            Nhân viên tư vấn rất nhiệt tình, còn cẩn thận note lại các món dị ứng, phòng sạch sẽ và thoáng mát, buffet hải sản tươi ngon.
-                            Cảm giác được chăm sóc chu đáo khiến kỳ nghỉ trở nên hoàn hảo và đáng nhớ. Mình chắc chắn sẽ quay lại lần sau và giới thiệu cho bạn bè."
-                        </p>
-                        <p class="text-end text-warning fw-bold mb-0">- Minh Hoàng</p>
-                    </div>
-                </div>
-
-                <!-- Review 2 -->
-                <div class="carousel-item">
-                    <div class="p-4 rounded-4 mx-auto" style="max-width:700px; background: rgba(255,255,255,0.1); backdrop-filter: blur(6px);">
-                        <p style="color:#fff; font-style:italic;">
-                            "Một trải nghiệm đáng nhớ cho cả gia đình! Phòng khách sạn rộng rãi, sạch sẽ, view biển cực đẹp, tiện nghi đầy đủ và nhân viên thân thiện.
-                            Bữa sáng phong phú, hải sản tươi ngon, không gian nghỉ dưỡng yên tĩnh, khiến chúng mình thực sự thư giãn.
-                            Mọi thứ đều hoàn hảo, chắc chắn sẽ trở lại và giới thiệu cho những người thân yêu."
-                        </p>
-                        <p class="text-end text-warning fw-bold mb-0">- Lan Anh</p>
-                    </div>
-                </div>
-
-                <!-- Review 3 -->
-                <div class="carousel-item">
-                    <div class="p-4 rounded-4 mx-auto" style="max-width:700px; background: rgba(255,255,255,0.1); backdrop-filter: blur(6px);">
-                        <p style="color:#fff; font-style:italic;">
-                            "Trải nghiệm tuyệt vời! Dịch vụ chuyên nghiệp, phòng ốc sang trọng, sạch sẽ.
-                            Nhân viên tư vấn nhiệt tình, hướng dẫn tận tình các địa điểm tham quan, giúp chuyến đi của chúng tôi dễ dàng và vui vẻ hơn.
-                            Buffet sáng đa dạng, tiện nghi đầy đủ, vị trí khách sạn thuận tiện cho việc đi lại.
-                            Mình hài lòng và sẽ quay lại trong những chuyến tiếp theo."
-                        </p>
-                        <p class="text-end text-warning fw-bold mb-0">- Phạm Tuấn</p>
-                    </div>
-                </div>
-
-                <!-- Review 4 -->
-                <div class="carousel-item">
-                    <div class="p-4 rounded-4 mx-auto" style="max-width:700px; background: rgba(255,255,255,0.1); backdrop-filter: blur(6px);">
-                        <p style="color:#fff; font-style:italic;">
-                            "Kỳ nghỉ tuyệt vời! Mọi thứ từ đặt phòng, check-in, đến dịch vụ tại khách sạn đều rất chuyên nghiệp.
-                            Phòng ốc sạch sẽ, rộng rãi, view đẹp, ăn sáng phong phú, hải sản tươi ngon.
-                            Cảm giác như được chăm sóc tận tâm từ đầu đến cuối. Mình cảm thấy thư giãn, thoải mái và chắc chắn sẽ giới thiệu cho bạn bè."
-                        </p>
-                        <p class="text-end text-warning fw-bold mb-0">- Trần Thị Bích</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Controls -->
-            <button class="carousel-control-prev" type="button" data-bs-target="#reviewsCarousel" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true" style="filter: invert(1);"></span>
-                <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#reviewsCarousel" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true" style="filter: invert(1);"></span>
-                <span class="visually-hidden">Next</span>
-            </button>
-
-            <!-- Indicators -->
-            <div class="carousel-indicators mt-3">
-                <button type="button" data-bs-target="#reviewsCarousel" data-bs-slide-to="0" class="active" aria-current="true"></button>
-                <button type="button" data-bs-target="#reviewsCarousel" data-bs-slide-to="1"></button>
-                <button type="button" data-bs-target="#reviewsCarousel" data-bs-slide-to="2"></button>
-                <button type="button" data-bs-target="#reviewsCarousel" data-bs-slide-to="3"></button>
-            </div>
-        </div>
-    </section>
-
-    <style>
-        #reviews-carousel-section .carousel-indicators button {
-            background-color: #ffd27a;
-            opacity: 0.8;
-        }
-
-            #reviews-carousel-section .carousel-indicators button.active {
-                opacity: 1;
-            }
-
-        #reviews-carousel-section .carousel-control-prev-icon,
-        #reviews-carousel-section .carousel-control-next-icon {
-            background-size: 100%, 100%;
-        }
-    </style>
-
-
 
     <footer>
-        © 2025 Smart Hotel Finder | Thiết kế bởi 💖 Nhóm 9
-
+        © 2025 Smart Hotel Finder | Thiết kế bởi 💖 Nhóm của bạn
     </footer>
-    <!-- ===================== FOOTER ===================== -->
-    <!-- templates/includes/footer.html -->
-    <footer class="bg-dark text-light pt-5 mt-5">
-        <div class="container">
-            <div class="row">
-                <!-- Thông tin công ty -->
-                <div class="col-md-4 mb-3">
-                    <h5>Thông tin công ty</h5>
-                    <p>
-                        Công ty TNHH Du Lịch và Dịch Vụ Hotelpinder<br>
-                        227 Nguyễn Văn Cừ, phường 4, quận 5, TP.Hồ Chí Minh, Việt Nam<br>
-                        Mã số doanh nghiệp: 0123456789<br>
-                        Do Sở Kế hoạch và Đầu tư Nhóm 9 cấp ngày 21/10/2025
-                    </p>
-                </div>
-
-                <!-- Giới thiệu -->
-                <div class="col-md-2 mb-3">
-                    <h5>GIỚI THIỆU</h5>
-                    <ul class="list-unstyled">
-                        <li><a href="/about" class="text-light text-decoration-none">Về chúng tôi</a></li>
-                        <li><a href="#" class="text-light text-decoration-none">Điều khoản và điều kiện</a></li>
-                        <li><a href="#" class="text-light text-decoration-none">Chính sách riêng tư</a></li>
-                        <li><a href="#" class="text-light text-decoration-none">Hướng dẫn sử dụng</a></li>
-                        <li><a href="#" class="text-light text-decoration-none">Hình thức thanh toán</a></li>
-                        <li><a href="/contact" class="text-light text-decoration-none">Liên hệ</a></li>
-                    </ul>
-                </div>
-
-                <!-- Liên hệ -->
-                <div class="col-md-3 mb-3">
-                    <h5>LIÊN HỆ</h5>
-                    <p>
-                        Hotline: <a href="tel:0123456789" class="text-light">0123456789</a><br>
-                        Email: <a href="mailto:hotelpinder@gmail.com" class="text-light">hotelpinder@gmail.com</a>
-                    </p>
-                </div>
-
-                <!-- Điểm đến & Blog -->
-                <div class="col-md-3 mb-3">
-                    <h5>ĐIỂM ĐẾN</h5>
-                    <ul class="list-unstyled">
-                        <li><a href="/destinations/Da%20Nang" class="text-light text-decoration-none">Đà Nẵng</a></li>
-                        <li><a href="/destinations/Ha%20Noi" class="text-light text-decoration-none">Hà Nội</a></li>
-                        <li><a href="/destinations/Ho%20Chi%20Minh" class="text-light text-decoration-none">Hồ Chí Minh</a></li>
-                        <li><a href="/destinations/Nha%20Trang" class="text-light text-decoration-none">Nha Trang</a></li>
-                    </ul>
-                    <h5 class="mt-3">BLOG</h5>
-                    <ul class="list-unstyled">
-                        <li><a href="/blog" class="text-light text-decoration-none">Quy định chung và lưu ý</a></li>
-                    </ul>
-                </div>
-            </div>
-
-            <hr class="bg-light">
-
-            <p class="text-center mb-0">&copy; 2025 Smart Hotel Finder | Thuộc bản quyền 💖 Nhóm 9</p>
-        </div>
-    </footer>
-
-    <!-- ===================== KẾT THÚC FOOTER ===================== -->
-
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-    <div class="chatbot-floating-btn">
-        <a href="/chatbot" class="floating-btn">
-            <span class="btn-icon">💬</span>
-            <span class="btn-text">Chatbot Tư vấn</span>
-        </a>
-    </div>
-
-    <style>
-        .chatbot-floating-btn {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            z-index: 1000;
-        }
-
-        .floating-btn {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 15px 20px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 16px;
-            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
-            transition: all 0.3s ease;
-            border: none;
-        }
-
-            .floating-btn:hover {
-                transform: translateY(-5px);
-                box-shadow: 0 12px 35px rgba(102, 126, 234, 0.6);
-                color: white;
-                text-decoration: none;
-            }
-
-        .btn-icon {
-            font-size: 20px;
-        }
-
-        .btn-text {
-            white-space: nowrap;
-        }
-
-        /* Hiệu ứng pulse */
-        @keyframes pulse {
-            0% {
-                transform: scale(1);
-            }
-
-            50% {
-                transform: scale(1.05);
-            }
-
-            100% {
-                transform: scale(1);
-            }
-        }
-
-        .floating-btn {
-            animation: pulse 2s infinite;
-        }
-    </style>
 </body>
 </html>
